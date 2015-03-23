@@ -7,3 +7,5 @@ Simply execute it with:
     ./host-monitor.sh pixplicity.com
     
 The script will remain running until aborted (Ctrl+C), informing you via desktop notifications through `notify-send`.
+
+![Example of output](http://i.imgur.com/iizApWl.png)
