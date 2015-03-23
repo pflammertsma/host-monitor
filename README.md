@@ -8,4 +8,5 @@ Simply execute it with:
     
 The script will remain running until aborted (Ctrl+C), informing you via desktop notifications through `notify-send`.
 
-![Example of output](http://i.imgur.com/iizApWl.png)
+![Example of output](http://i.imgur.com/iizApWl.png)  
+![Example of notification](http://i.imgur.com/GixwghH.png)
