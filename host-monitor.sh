@@ -1,13 +1,31 @@
 #!/bin/bash
 
-host=$1
 timeout=10
+
+while [[ $# > 1 ]]; do
+    key="$1"
+    case $key in
+        -t|--timeout)
+            timeout="$2"
+            shift
+        ;;
+        *)
+            # unknown option
+        ;;
+    esac
+    shift
+done
+
+host=$1
 notification_timeout=0
 
 down=-2
 
 if [ -z $host ]; then
-    echo "Usage: `basename $0` [HOST]"
+    echo "Usage: `basename $0` [OPTION] HOST"
+    echo "Where OPTION is any of:"
+    echo "    -t, --timeout"
+    echo "        timeout in milliseconds"
     exit 1
 fi
 
@@ -35,7 +53,6 @@ while :; do
             fi
         	down=1
     	fi
-    	sleep $(($timeout-1))
     else
         echo -e "`date +'%Y/%m/%d %H:%M:%S'` - host $host is \033[0;32mok\033[0m -`echo $result | cut -d ':' -f 2`"
         if [ $down -ne 0 ]; then
@@ -48,6 +65,9 @@ while :; do
             fi
         	down=0
     	fi
-        sleep $timeout # avoid ping rain
     fi
+    now=$(date +%s)
+    diff=$(($now-$timestamp))
+    # avoid ping rain
+    sleep $((timeout-diff))
 done
