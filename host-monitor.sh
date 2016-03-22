@@ -25,9 +25,11 @@ if [ -z $host ]; then
     echo "Usage: `basename $0` [OPTION] HOST"
     echo "Where OPTION is any of:"
     echo "    -t, --timeout"
-    echo "        timeout in milliseconds"
+    echo "        timeout in seconds"
     exit 1
 fi
+
+#echo $((timeout/1000));
 
 last=0
 
@@ -69,5 +71,8 @@ while :; do
     now=$(date +%s)
     diff=$(($now-$timestamp))
     # avoid ping rain
-    sleep $((timeout-diff))
+    duration=$((timeout-diff))
+    if [ $duration -gt 0 ]; then
+        sleep $duration
+    fi
 done
